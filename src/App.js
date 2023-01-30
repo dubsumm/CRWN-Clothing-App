@@ -1,19 +1,28 @@
-//*REACT
+//*REACT layers
+
 import { Routes, Route} from 'react-router-dom';
 
 //* COMPONENTS
-import Home from './routes/home/Home.component';
+import Home from './routes/home/Home';
+import Navigation from './routes/navigation/Navigation';
+import SignIn from './routes/sign-in/SignIn';
 //* STYLES
 
-
+const Shop = () => {
+  
+  return<div><h1>I am the shop</h1></div>
+}
 
 
 const  App = () => {
 
   return (
   <Routes>
-    <Route path='/' element={<Home/>}/>
-    
+    <Route path='/' element={<Navigation/>}>
+      <Route index element={<Home/>}/>
+      <Route path='/shop' element={<Shop/>}/>
+      <Route path='sign-in' element={<SignIn/>}/>
+    </Route>
   </Routes>
   )
 }
