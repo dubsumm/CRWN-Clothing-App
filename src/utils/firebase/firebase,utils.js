@@ -6,8 +6,13 @@ import {
     signInWithPopup, 
     GoogleAuthProvider
 } from 'firebase/auth'
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {getFirestore,
+        doc,
+        getDoc,
+        setDoc,
+        snapshotEqual
+    } from 'firebase/firestore'
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -28,3 +33,31 @@ provider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup= () => signInWithPopup(auth, provider)
+
+const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+
+    const userDocRef = doc(db, 'users',userAuth.uid )
+
+    console.log(userDocRef)
+
+    const userSnapshot = await getDoc(userDocRef);
+
+    if(!userSnapshot.exists()) {
+        const {displayName, email} = userAuth;
+        const createdAt = new Date()
+        try{
+            await setDoc(userDocRef, {
+                displayName,
+                email,
+                createdAt
+            });
+        }
+        catch (error) {
+            console.log('Error creating user', error.message)
+        }
+    }
+    return userDocRef
+
+}
