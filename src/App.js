@@ -5,7 +5,7 @@ import { Routes, Route} from 'react-router-dom';
 //* COMPONENTS
 import Home from './routes/home/Home';
 import Navigation from './routes/navigation/Navigation';
-import SignIn from './routes/sign-in/SignIn';
+import SignIn from './components/sign-in/SignIn';
 //* STYLES
 
 const Shop = () => {
