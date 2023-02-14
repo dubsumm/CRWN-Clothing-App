@@ -1,13 +1,12 @@
 //*REACT
-import { useState } from "react";
+import { useState} from "react";
 
 ///*FIREBASE
 import {
-  createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword
-} from "../../utils/firebase/firebase,utils";
+} from "../../utils/firebase/firebase.utils";
 
 //*COMPONENTS
 import FormInput from "../form-input/FormInput";
@@ -16,13 +15,18 @@ import Button from "../button/Button";
 //*STYLES
 import "./sign-in-form.styles.scss";
 
+//*COMPONENTS
+
+
 const defaultFormFields = {
   email: "",
   password: "",
 };
 //* the object is usable because each piece of input has the same logic and Im just changing the input values
 
-const SignUpForm = () => {
+
+
+const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
@@ -31,8 +35,8 @@ const SignUpForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
+    
   };
 
   const handleChange = (event) => {
@@ -44,8 +48,8 @@ const SignUpForm = () => {
     event.preventDefault();
 
     try {
-      const res = await signInAuthUserWithEmailAndPassword(email, password)
-      console.log(res)
+      const {user} = await signInAuthUserWithEmailAndPassword(email, password)
+     
       resetFormFields();
     } catch (err) {
       switch(err.code ) {
@@ -92,4 +96,4 @@ const SignUpForm = () => {
     </div>
   );
 };
-export default SignUpForm;
+export default SignInForm;

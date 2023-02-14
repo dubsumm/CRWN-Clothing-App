@@ -1,18 +1,18 @@
 //*REACT
-import { useState } from "react";
+import { useState} from "react";
 
 ///*FIREBASE
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
-} from "../../utils/firebase/firebase,utils";
+} from "../../utils/firebase/firebase.utils";
 
 //*COMPONENTS
 import FormInput from "../form-input/FormInput";
 import Button from "../button/Button";
 
 //*STYLES
-import './sign-up-form.styles.scss'
+import "./sign-up-form.styles.scss";
 
 const defaultFormFields = {
   displayName: "",
@@ -30,10 +30,7 @@ const SignUpForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormFields({ ...formFields, [name]: value }); //* this spread is used because we don't know which destructured piece is changing so we can generalize
-  };
+ 
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -51,6 +48,11 @@ const SignUpForm = () => {
         console.log("user creation encountered an error ", err);
       }
     }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormFields({ ...formFields, [name]: value }); //* this spread is used because we don't know which destructured piece is changing so we can generalize
   };
 
   return (
