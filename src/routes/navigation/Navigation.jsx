@@ -11,6 +11,7 @@ import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 
 //* STYLES
 import "./navigation.styles.scss";
+import CartIcon from '../../components/cart-icon/CartIcon'
 
 const Navigation = () => {
 
@@ -33,6 +34,7 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
+           <CartIcon/>
         </div>
       </div>
       <Outlet />
