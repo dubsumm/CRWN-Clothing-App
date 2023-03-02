@@ -1,0 +1,13 @@
+.checkout-container {
+    width:75%;
+ img {
+    position: relative;
+    width: 200px
+ }
+    .label-container {
+        width: 100%;
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+    }
+}
