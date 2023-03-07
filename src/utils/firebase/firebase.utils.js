@@ -1,29 +1,34 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
-    getAuth, 
-    signInWithPopup, 
+    getAuth,
+    signInWithPopup,
     GoogleAuthProvider,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut,
     onAuthStateChanged
 } from 'firebase/auth'
-import {getFirestore,
-        doc,
-        getDoc,
-        setDoc,
-    } from 'firebase/firestore'
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+    collection,
+    writeBatch,
+    query,
+    getDocs
+} from 'firebase/firestore'
 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyANJUT2X0NjmOUE03VcVmvb183dwVck22o",
-  authDomain: "crwn-clothing-db-14b81.firebaseapp.com",
-  projectId: "crwn-clothing-db-14b81",
-  storageBucket: "crwn-clothing-db-14b81.appspot.com",
-  messagingSenderId: "322940903483",
-  appId: "1:322940903483:web:da53dbe1b8fa94db5e3c1e"
+    apiKey: "AIzaSyANJUT2X0NjmOUE03VcVmvb183dwVck22o",
+    authDomain: "crwn-clothing-db-14b81.firebaseapp.com",
+    projectId: "crwn-clothing-db-14b81",
+    storageBucket: "crwn-clothing-db-14b81.appspot.com",
+    messagingSenderId: "322940903483",
+    appId: "1:322940903483:web:da53dbe1b8fa94db5e3c1e"
 };
 
 // Initialize Firebase
@@ -34,21 +39,47 @@ googleProvider.setCustomParameters({
 })
 
 export const auth = getAuth();
-export const signInWithGooglePopup= () => signInWithPopup(auth, googleProvider)
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider)
+
 const db = getFirestore();
 
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+    const collectionRef = collection(db, collectionKey)
+    const batch = writeBatch(db)
+
+    objectsToAdd.forEach((obj) => {
+        const docRef = doc(collectionRef, obj.title.toLowerCase())
+        batch.set(docRef, obj)
+    })
+
+    await batch.commit()
+    console.log('done')
+}
+
+export const getCategoriesAndDocuments = async () => {
+    const collectionRef = collection(db,'categories')
+    const q = query(collectionRef)
+    const querySnapShot = await getDocs(q)
+    const categoryMap = querySnapShot.docs.reduce((acc, docSnapShot) => {
+        const {title, items} = docSnapShot.data()
+        acc[title.toLowerCase()] = items
+        return acc
+    }, {})
+    return categoryMap
+}
+
 export const createUserDocumentFromAuth = async (
-    userAuth, 
+    userAuth,
     additionalInformation = {}
 ) => {
-    if(!userAuth) return 
+    if (!userAuth) return
 
-    const userDocRef = doc(db, 'users',userAuth.uid )
+    const userDocRef = doc(db, 'users', userAuth.uid)
     const userSnapshot = await getDoc(userDocRef);
-    if(!userSnapshot.exists()) {
-        const {displayName, email} = userAuth;
+    if (!userSnapshot.exists()) {
+        const { displayName, email } = userAuth;
         const createdAt = new Date()
-        try{
+        try {
             await setDoc(userDocRef, {
                 displayName,
                 email,
@@ -63,14 +94,14 @@ export const createUserDocumentFromAuth = async (
     return userDocRef
 }
 
-export const createAuthUserWithEmailAndPassword = async(email, password) => {
-    if(!email || !password) return
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return
 
     return await createUserWithEmailAndPassword(auth, email, password)
 }
 
-export const signInAuthUserWithEmailAndPassword = async(email, password) => {
-    if(!email || !password) return
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return
 
     return await signInWithEmailAndPassword(auth, email, password)
 }
@@ -78,8 +109,8 @@ export const signInAuthUserWithEmailAndPassword = async(email, password) => {
 export const signOutUser = async () => await signOut(auth)
 
 
-export const onAuthStateChangedListener = (callback) =>  {
+export const onAuthStateChangedListener = (callback) => {
     onAuthStateChanged(auth, callback)
-    
+
 }
 
