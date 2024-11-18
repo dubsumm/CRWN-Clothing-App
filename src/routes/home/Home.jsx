@@ -7,8 +7,6 @@ import Directory from '../../components/directory/Directory';
 //* STYLES
 
 
-
-
 function Home() {
 
   const categories = [

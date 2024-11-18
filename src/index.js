@@ -11,10 +11,9 @@ import { CartProvider } from './contexts/Cart.context';
 
 import './index.scss';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter >
       <UserProvider>
         <CategoriesProvider>
           <CartProvider>
