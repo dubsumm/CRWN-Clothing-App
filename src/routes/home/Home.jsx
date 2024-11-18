@@ -1,5 +1,4 @@
 //*REACT
-import { BrowserRouter } from 'react-router-dom';
 
 //* COMPONENTS
 import Directory from '../../components/directory/Directory';

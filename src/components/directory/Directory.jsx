@@ -1,7 +1,7 @@
 //*REACT
 import React from 'react'
 //*COMPONENTS
-import CategoryItem from '../category-item/CategoryItem'
+import CategoryItem from '../directory-item/DirectoryItem'
 //*STYLING
 import './directory.styles.scss'
 
