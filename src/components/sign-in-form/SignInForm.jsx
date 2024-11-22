@@ -3,7 +3,7 @@ import { useState} from "react";
 
 ///*FIREBASE
 import {
-  createUserDocumentFromAuth,
+  // createUserDocumentFromAuth,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword
 } from "../../utils/firebase/firebase.utils";
@@ -48,7 +48,7 @@ const SignInForm = () => {
     event.preventDefault();
 
     try {
-      const {user} = await signInAuthUserWithEmailAndPassword(email, password)
+       await signInAuthUserWithEmailAndPassword(email, password)
      
       resetFormFields();
     } catch (err) {

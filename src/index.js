@@ -4,25 +4,22 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './App';
 
-//*CONTEXTS
-import { UserProvider } from './contexts/user.context';
-import { CategoriesProvider } from './contexts/categories.context';
 import { CartProvider } from './contexts/Cart.context';
 
 import './index.scss';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  // <React.StrictMode>
+  <Provider store={store}>
     <BrowserRouter >
-      <UserProvider>
-        <CategoriesProvider>
           <CartProvider>
             <App />
           </CartProvider>
-        </CategoriesProvider>
-      </UserProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </Provider >
+   // </React.StrictMode> 
 );
 
 

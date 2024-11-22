@@ -11,6 +11,7 @@ import ProductCard from "../../components/product-card/ProductCard";
 
 const Category = () => {
   const {category} = useParams();
+  console.log(category);
   
   const { categoriesMap } = useContext(CategoriesContext);
   const [products, setProducts] = useState(categoriesMap[category]);
