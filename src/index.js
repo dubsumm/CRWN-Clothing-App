@@ -11,15 +11,15 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  // <React.StrictMode>
-  <Provider store={store}>
-    <BrowserRouter >
-          <CartProvider>
-            <App />
-          </CartProvider>
-    </BrowserRouter>
-  </Provider >
-   // </React.StrictMode> 
+  <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter >
+        <CartProvider>
+          <App />
+        </CartProvider>
+      </BrowserRouter>
+    </Provider >
+  </React.StrictMode>
 );
 
 
