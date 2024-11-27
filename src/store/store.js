@@ -7,7 +7,7 @@ import { rootReducer } from './root-reducer';
 const persistConfig = { 
   key: 'root',
   storage,
-  blacklist: ['user']
+  whitelist: ['cart']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
@@ -19,4 +19,4 @@ const composedEnhancers = composeEnhancer(applyMiddleware(...middleWares));
 
 export const store = createStore(persistedReducer, undefined, composedEnhancers)
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store)  
